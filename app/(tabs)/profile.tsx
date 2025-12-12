@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
@@ -83,7 +83,20 @@ const menuItems = [
         icon: "log-out-outline",
         iconColor: "#701A75",
         iconBg: "#FAE8FF",
-        onPress: handleLogout
+        onPress: () =>{
+            Alert.alert(
+                "Sign Out",
+                "Are you sure you want to sign out? ",[
+                    {text: "Cancel", style : "cancel"},
+                    {
+                        text: "Sign Out !",
+                        style: "destructive",
+                        onPress: handleLogout
+                    }
+                ]
+            )
+        }
+        
     }
 ];
 

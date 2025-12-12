@@ -29,6 +29,8 @@ export const storeAccessToken = async (token: string): Promise<void> => {
 export const removeAccessToken = async (): Promise<void> => {
     try {
         await SecureStore.deleteItemAsync("access_token");
+        await SecureStore.deleteItemAsync("refresh_token")
+        await SecureStore.deleteItemAsync("user")
     } catch (error) {
         console.error("Error removing access token: ", error);
     }

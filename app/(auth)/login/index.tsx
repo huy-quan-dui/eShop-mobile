@@ -21,6 +21,7 @@ import { toast } from 'sonner-native';
 import * as SecureStore from 'expo-secure-store';
 import { storeAccessToken } from '@/utils/axiosInstance';
 
+
 interface LoginFormData {
   email: string;
   password: string;
@@ -73,13 +74,13 @@ export default function LoginScreen() {
     },
     mode: 'onBlur',
   });
-
+ 
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
-      toast.success("Login successful! welcomw back")
+      toast.success("Login successful! welcome back")
       const user = {
-        id: data?.user?.id,
+        _id: data?.user?._id || data?.user?.id,
         name: data?.user?.name,
         email: data?.user?.email,
         avatar: data?.user?.avatar,
@@ -92,8 +93,9 @@ export default function LoginScreen() {
         await storeAccessToken(data.accessToken);
       }
       // Store refesh token if available
-      if (data?.refeshToken) {
-        await SecureStore.setItemAsync("refesh_token", data.refeshToken)
+      const theRefreshToken = data?.refreshToken || data?.refresh_token;
+      if (theRefreshToken) {
+        await SecureStore.setItemAsync("refresh_token", theRefreshToken)
       }
       router.replace("/(tabs)")
     },

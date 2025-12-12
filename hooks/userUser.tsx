@@ -1,10 +1,10 @@
-import { use, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import * as SecureStore from 'expo-secure-store';
 
 
 
 interface User {
-    id: string;
+    _id: string;
     name: string;
     email: string
     avatar?: {
@@ -30,6 +30,10 @@ const useUser = () => {
             return null;
         }
     }
+
+    useEffect(() => {
+        getUserData();
+    }, []);
 
     const updateUserData = async (newUserData: User) => {
         try {
